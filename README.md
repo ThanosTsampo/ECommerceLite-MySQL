@@ -6,43 +6,58 @@ An enterprise-ready, lightweight MySQL database project simulating an e-commerce
 
 ## 🛠️ Project Structure & Architecture
 
-The project consists of 5 modular SQL scripts and verification screenshots:
+The project consists of modular SQL scripts and execution screenshots mapping each step of the pipeline:
 
-1. **`01_Create_Database_And_Tables.sql`**: Database creation, schema design (DDL), and referential integrity via Primary and Foreign Keys.
-2. **`02_ETL_Products.sql`**: Staging table pattern and ETL data transformation pipeline (`TRIM`, `CAST`, `NULLIF`).
-3. **`03_Populate_Remaining_Data.sql`**: Seed data population for Users, Orders, and OrderItems, with `UNION ALL` row count verification.
-4. **`04_Business_Queries.sql`**: Business intelligence queries demonstrating Joins, Aggregations, `COALESCE`, and defensive edge-case handling (`IFNULL`/`CONCAT`).
-5. **`05_Triggers_And_Automation.sql`**: Automated real-time inventory management using an `AFTER INSERT` trigger.
-
----
-
-## 📸 Database Setup & ETL Verification
-
-### 1. Product ETL Pipeline Verification
-Transforms and cleans raw staging product data into the production catalog.
-
-![ETL Verification](./02_ETL_Products_Verification.png)
-
-### 2. Database Row Count Verification
-Cross-checks record counts across all relational tables using `UNION ALL`.
-
-![Row Counts](./03_Database_Row_Counts.png)
+1. **`00_Connection`**: Database connection setup.
+2. **`01_Create_Database_And_Tables.sql`**: Schema definition (DDL) and referential integrity rules.
+3. **`02_ETL_Products.sql`**: Staging table pattern and ETL data transformation pipeline (`TRIM`, `CAST`, `NULLIF`).
+4. **`03_Populate_Remaining_Data.sql`**: Seed data population for Users, Orders, and OrderItems.
+5. **`04_Business_Queries.sql`**: Business intelligence queries and data analytics.
+6. **`05_Triggers_And_Automation.sql`**: Automated real-time inventory management using an `AFTER INSERT` trigger.
 
 ---
 
-## 📊 Business Analytics & Automation Queries
+## 📸 Step-by-Step Implementation & Verification
 
-### 1. Revenue Calculation per Order
-* **Methods:** `INNER JOIN`, `GROUP BY`, `SUM()`
+### 0. Database Connection
+* Initial connection and setup in the DBMS environment.
 
-### 2. Top-Selling Products Tracking
-* **Methods:** `JOIN`, `GROUP BY`, `ORDER BY DESC`
+![Connection Setup](./00_DBeaver_MySQL_Connection_Success.png)
 
-### 3. Customer Lifetime Value (CLV) with Edge-Case Handling
-* **Methods:** `LEFT JOIN`, `COALESCE()`, `CONCAT()`, `IFNULL()` (ensuring zero-spend and unregistered users are cleanly reported without `NULL` distortions).
+---
 
-### 4. Real-Time Inventory Automation (Trigger)
-* **Methods:** `CREATE TRIGGER`, `AFTER INSERT`, transactional `UPDATE` on stock quantities to prevent overselling.
+### 1. Database & Table Creation (`01_Create_Database_And_Tables.sql`)
+* Created normalized relational tables (`Users`, `Products`, `Orders`, `OrderItems`) enforcing `PRIMARY KEY` and `FOREIGN KEY` constraints.
+
+![Step 1 Schema Setup](./01_Create_Database_And_Tables.png)
+
+---
+
+### 2. ETL Pipeline & Data Cleaning (`02_ETL_Products.sql`)
+* Ingested raw product data into a staging table (`staging_products`) and transformed it using `TRIM()`, `REPLACE()`, `CAST()`, and `NULLIF()`.
+
+![Step 2 ETL Verification](./02_ETL_Products_Verification.png)
+
+---
+
+### 3. Seed Data & Database Population (`03_Populate_Remaining_Data.sql`)
+* Populated foundational transactional tables and cross-checked record counts.
+
+![Step 3 Database Row Counts](./03_Database_Row_Counts.png)
+
+---
+
+### 4. Business Intelligence & Analytics (`04_Business_Queries.sql`)
+* Executed key operational analytics including revenue calculations, top-selling products, and Customer Lifetime Value (CLV).
+
+![Step 4 Business Queries](./04_Business_Analytics_Results.png)
+
+---
+
+### 5. Automated Inventory Trigger (`05_Triggers_And_Automation.sql`)
+* Developed an `AFTER INSERT` trigger (`trg_update_stock_after_order`) to automatically adjust product inventory upon new order placement.
+
+![Step 5 Trigger Creation](./05_Triggers_And_Automation.png)
 
 ---
 
@@ -55,6 +70,6 @@ Cross-checks record counts across all relational tables using `UNION ALL`.
 
 ## 💡 Key SQL & Engineering Techniques Demonstrated
 * **Data Cleaning & Casting:** `TRIM()`, `REPLACE()`, `CAST()`, `NULLIF()`
-* **Defensive Programming:** `IFNULL(CONCAT(...))` for safe string concatenation.
+* **Defensive Programming:** `IFNULL(CONCAT(...))` for safe string concatenation and edge-case handling.
 * **Database Automation:** Row-level triggers for implicit inventory synchronization.
 * **Set-Based Operations:** Efficient table joins and aggregations instead of procedural loops.
