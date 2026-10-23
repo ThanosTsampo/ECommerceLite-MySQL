@@ -29,7 +29,7 @@ The project consists of modular SQL scripts and execution screenshots mapping ea
 ### 1. Database & Table Creation (`01_Create_Database_And_Tables.sql`)
 * Created normalized relational tables (`Users`, `Products`, `Orders`, `OrderItems`) enforcing `PRIMARY KEY` and `FOREIGN KEY` constraints.
 
-![Step 1 Schema Setup](./01_Create_Database_And_Tables.png)
+![Step 1 Schema Setup](./01_Create_Database_And_Tables_Success.png)
 
 ---
 
